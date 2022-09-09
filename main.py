@@ -70,7 +70,7 @@ while True:
     if token == gameset.TOKENS[1]:
         config.SAVES.PLAYERS[0]['tokens'] = token
     else:
-        config.SAVES.PLAYERS[0]['tokens'] = 'O'
+        config.SAVES.PLAYERS[1]['tokens'] = 'O'
 
     # elif ... прочие команды
 
