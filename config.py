@@ -3,7 +3,7 @@
 from pathlib import Path
 from sys import argv
 from configparser import ConfigParser as CP
-
+from main import token
 
 # глобальные переменные модуля config
 SCRIPT_DIR = Path(argv[0]).parent
@@ -12,7 +12,8 @@ SAVES_INI_PATH = SCRIPT_DIR / "saves.ini"
 
 PLAYERS = ()
 STATS = {}
-SAVES = {}
+SAVES = {PLAYERS[0]:{'tokens': token},
+         PLAYERS[1]:{'tokens': token}}
 
 # переменные типов для аннотации
 #Row = list[str | int | float] | tuple[str | int | float, ...]
