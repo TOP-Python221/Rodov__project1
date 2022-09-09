@@ -43,7 +43,9 @@ while True:
         else:
             # 10. Внесение изменений в статистику игрока(-ов)
             game.update_stats(result)
-
+        # Если первая партия для любого из игроков - режим обучения
+        if gameset.is_first_game() is True:
+            print(help.H_RULES)
     elif command in help.COMMANDS['загрузить партию']:
         try:
             # 5. Проверка наличия сохранённых партий для текущего игрока
