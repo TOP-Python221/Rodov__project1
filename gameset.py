@@ -31,10 +31,14 @@ def game_mode() -> str:
     """Запрашивает режим для новой партии, добавляет имя бота либо второго игрока в глобальную переменную текущих игроков, запрашивает очерёдность ходов."""
     # stdin -> mode
     # if mode == 'single':
-    #     get_difficulty_level()
-    # elif mode == 'double':
-    #     get_player_name()
+    mode = input('Введите режим игры (single - с ботом или double - с другим пользователем): ')
+    if mode == 'single':
+        game_mode.get_difficultly_level()
+    elif mode == 'double':
+        get_player_name()
     # stdin -> who_is_cross
+    config.PLAYERS.append(name)
+    return mode
     # name -> PLAYERS
     # return -> mode
 
