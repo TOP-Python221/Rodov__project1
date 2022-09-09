@@ -41,8 +41,8 @@ def game_mode() -> str:
 
 def is_first_game() -> bool:
     """Проверяет является ли данная партия первой для любого из игроков."""
-    # for name in PLAYERS:
-    #     if config.STATS[name]['training']:
-    #         return True
-    # else:
-    #     return False
+    for config.PLAYERS[0] in config.PLAYERS:
+        if config.STATS[config.PLAYERS[0]]['training' == True]:
+            return True
+    else:
+        return False
