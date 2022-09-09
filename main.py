@@ -59,9 +59,16 @@ while True:
                 game.update_stats(result)
                 # 10. Удаление данных о доигранной сохранённой партии
                 # ...
-
         except LookupError:
             print('no saved games for you')
+    elif command in help.COMMANDS['загрузить партию']:
+        pass
+    # Запрос символа для игры
+    token = input('Введите символ, которым будете играть (X или O): ')
+    if token == gameset.TOKENS[1]:
+        config.SAVES.PLAYERS[0]['tokens'] = token
+    else:
+        config.SAVES.PLAYERS[0]['tokens'] = 'O'
 
     # elif ... прочие команды
 
