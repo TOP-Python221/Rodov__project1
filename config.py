@@ -11,7 +11,11 @@ PLAYERS_INI_PATH = SCRIPT_DIR / "players.ini"
 SAVES_INI_PATH = SCRIPT_DIR / "saves.ini"
 
 PLAYERS = ()
-STATS = {PLAYERS[0]:{'wins': 0, 'lose': 0, 'ties': 0, 'training': True},}
+STATS = {PLAYERS[0]:{'wins': 0,
+                     'lose': 0,
+                     'ties': 0,
+                     'training': True},}
+
 SAVES = {PLAYERS[0]:{'tokens': token},
          PLAYERS[1]:{'tokens': token}}
 
