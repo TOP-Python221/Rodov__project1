@@ -10,12 +10,20 @@ import game
 
 def load() -> bool:
     """Выводит в stdout все сохранённые партии для текущего игрока, запрашивает партию для загрузки, настраивает глобальные переменные и возвращает True/False в зависимости от очерёдности хода."""
-    # name = gameset.PLAYERS[0]
-    # saves_found = False
-    # for save in config.SAVES:
-    #     if name in save:
-    #         save -> stdout
-    #         saves_found = True
+
+    name = input('Введите имя игрока: ')
+    if name in config.PLAYERS:
+        saves_found = False
+        for save in config.SAVES:
+            if name in save:
+                choice = input('Хотите загрузить старую партию или начать новую? '
+                               '(Введите: Загрузить старую или Начать новую)')
+                if choice == 'Загрузить старую':
+                    pass
+                elif choice == 'Начать новую':
+                    gameset.game_mode()
+            # save -> stdout
+            saves_found = True
     # if not saves_found:
     #     raise LookupError
     # stdin -> choice
