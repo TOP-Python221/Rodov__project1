@@ -65,12 +65,23 @@ while True:
             print('no saved games for you')
     elif command in help.COMMANDS['загрузить партию']:
         pass
+    elif command in help.COMMANDS['выйти из игры']:
+        file = open('saves.ini', 'a+' ,encoding='utf-8')
+        file.write(config.SAVES)
+        file.close()
+
+
+
     # Запрос символа для игры
     token = input('Введите символ, которым будете играть (X или O): ')
     if token == gameset.TOKENS[1]:
         config.SAVES.PLAYERS[0]['tokens'] = token
     else:
         config.SAVES.PLAYERS[1]['tokens'] = 'O'
+
+    # load_game
+    if config.saves_found== True:
+        config.SAVES
 
     # elif ... прочие команды
 
