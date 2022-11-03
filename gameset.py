@@ -10,7 +10,7 @@ TURNS = [ ['X', 'O', 'O'],
           [' ', 'O', ' '] ]
 
 """Запрос имени игрока и передача введённого значения в глобальную переменную STATS"""
-def get_player_name(name) -> None:
+def get_player_name() -> None:
     """Объявление глобальной переменной STATS в локальной функций get_player_name"""
     """Запрашивает имя игрока. """
     while True:
@@ -25,23 +25,6 @@ def get_player_name(name) -> None:
         config.STATS[player_name] = {'training': True,
                      'stats': {'wins': 0, 'ties': 0, 'fails': 0}}
     config.PLAYERS.append(player_name)
-
-
-def game_mode() -> str:
-    """Запрашивает режим для новой партии, добавляет имя бота либо второго игрока в глобальную переменную текущих игроков, запрашивает очерёдность ходов."""
-    # stdin -> mode
-    # if mode == 'single':
-    mode = input('Введите режим игры (single - с ботом или double - с другим пользователем): ')
-    if mode == 'single':
-        game_mode.get_difficultly_level()
-    elif mode == 'double':
-        get_player_name()
-    # stdin -> who_is_cross
-    config.PLAYERS.append(name)
-    return mode
-    # name -> PLAYERS
-    # return -> mode
-
 
 def is_first_game() -> bool:
     """Проверяет является ли данная партия первой для любого из игроков."""
