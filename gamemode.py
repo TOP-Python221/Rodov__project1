@@ -1,51 +1,49 @@
 """Дополнительный модуль: подготовка игрового процесса."""
 
 import config
+bot_name = 'Andrey' # Данная переменная была добавлена, чтобы интерпретатор не ругался на её отсутствие :)
 
 
-# ИСПРАВИТЬ: на текущий момент функция ничего не возвращает — исправить аннотацию
-def game_mode() -> str:
+def game_mode():
     """Запрашивает режим для новой партии, добавляет имя бота либо второго игрока в глобальную переменную текущих игроков, запрашивает очерёдность ходов."""
-    # УДАЛИТЬ: такой переменной нет на глобальном уровне и не должно быть
-    global name
     mode = input('Введите режим игры (single - с ботом или double - с другим пользователем): ')
     if mode.lower() == 'single':
         get_difficultly_level()
     elif mode.lower() == 'double':
-        # ИСПРАВИТЬ: внимательнее: ваша функция get_player_name() сама запрашивает у игрока имя, нет нужды передавать в неё имя игрока
-        name = get_player_name(input('Введите имя игрока: '))
-    # ИСПРАВИТЬ: либо сделайте переменную config.PLAYERS списком, либо используйте конкатенацию кортежей
-    config.PLAYERS.append(name)
+        get_player_name()
+        #config.PLAYERS += (name, )
 
 
-# ИСПРАВИТЬ: зачем передавать имя аргументом в функцию, которая сама запрашивает имя?
-def get_player_name(name) -> None:
+def get_player_name() -> None:
     """Запрашивает имя игрока, проводит валидацию и, при необходимости, добавляет новый элемент в config.STATS"""
     while True:
         player_name = input('Введите имя пользователя: ')
         # ДОБАВИТЬ: проверку на неравенство введённого имени именам ботов
-        if player_name:
+        if player_name and player_name != bot_name:
             break
         else:
-            print('Введите не пустую строку!')
+            raise ValueError('Введите корректное значение!')
     # КОММЕНТАРИЙ: далее всё хорошо
     # проверяет присутствие этого имени в config.STATS
     if player_name not in config.STATS:
         # создаёт запись о новом игроке в config.STATS
         config.STATS[player_name] = {'training': True,
                                      'stats': {'wins': 0, 'ties': 0, 'fails': 0}}
-    config.PLAYERS.append(player_name)
+    config.PLAYERS += (player_name, )
 
 
 def get_difficultly_level():
     """Запрашивает у пользователя уровень сложности для игры с ботом."""
-    level = input('Type difficult level of game(easy or hard)')
-    if level == 'easy':
-        # УДАЛИТЬ: функции ai.easy_mode() и ai.hard_mode() используются для расчёта хода во время партии — а мы здесь настройкой партии занимаемся
-        ai.easy_mode()
-        # ДОБАВИТЬ: нужную запись в переменную config.PLAYERS
-    if level == 'hard':
-        ai.hard_mode()
+    while True:
+        level = input('Введите предпочитаемую сложность игры("Легкий или сложный"): ')
+        if level == 'легкий':
+            config.PLAYERS += (bot_name,) # Добавляет имя бота в список игроков данной партий.
+            break
+        elif level == 'сложный':
+            config.PLAYERS += (bot_name,)
+            break
+
+
 
 
 # КОММЕНТАРИЙ:
