@@ -2,13 +2,13 @@
 
 # импорт дополнительных модулей проекта
 import config
+import functions
 import help
-import commands
-import gameset
+import gamemode
 import game
 
 
-help.show_title(help.APP_TITLE, padding_vertical=True)
+help.show_title(config.APP_TITLE, padding_vertical=True)
 
 # начало отработки Этапов работы приложения согласно Архитектуре
 
@@ -19,20 +19,20 @@ if config.read_ini():
     help.show_help()
 
 # 3. Запрос имени игрока
-gameset.get_player_name()
+gamemode.get_player_name()
 
 # суперцикл
 while True:
     # 4. Ожидание ввода пользовательских команд
-    command = input(help.PROMPT).lower()
+    command = input(config.PROMPT).lower()
 
-    if command in help.COMMANDS['выйти из игры']:
+    if command in config.COMMANDS['выйти из игры']:
         break
 
-    elif command in help.COMMANDS['начать новую партию']:
+    elif command in config.COMMANDS['начать новую партию']:
         # 5. Запрос режима игры
         #    6. Запрос символа для игры
-        gameset.game_mode()
+        gamemode.game_mode()
         # 8. Партия
         #    7. ЕСЛИ первая партия для любого из игроков
         result = game.game()
@@ -44,14 +44,15 @@ while True:
             # 10. Внесение изменений в статистику игрока(-ов)
             game.update_stats(result)
         # Если первая партия для любого из игроков - режим обучения
-        if gameset.is_first_game() is True:
+        if functions.is_first_game() is True:
             print(help.H_RULES)
-    elif command in help.COMMANDS['загрузить партию']:
+
+    elif command in config.COMMANDS['загрузить партию']:
         try:
             # 5. Проверка наличия сохранённых партий для текущего игрока
             #    6. Запрос партии для загрузки
             # 7. Партия
-            result = game.game(commands.load())
+            result = game.game(functions.load())
             if result is None:
                 # 8. ЕСЛИ партия закончена досрочно:
                 #         сохранение данных о партии
@@ -63,26 +64,28 @@ while True:
                 # ...
         except LookupError:
             print('no saved games for you')
-    elif command in help.COMMANDS['загрузить партию']:
+
+    elif command in config.COMMANDS['загрузить партию']:
         pass
-    elif command in help.COMMANDS['выйти из игры']:
-        file = open('saves.ini', 'a+' ,encoding='utf-8')
+
+    elif command in config.COMMANDS['выйти из игры']:
+        # УДАЛИТЬ: этот код должен находиться в функции save_ini()
+        # ИСПРАВИТЬ: если вы читаете весь файл в переменную, потом вносите в неё изменения, а потом ДОзаписываете информацию в файл, то в файле у вас будет иметь место дублирование информации
+        file = open('saves.ini', 'a+', encoding='utf-8')
         file.write(config.SAVES)
         file.close()
 
+    # elif ... прочие команды
 
 
+    # СДЕЛАТЬ: этот код должен быть в функции, которая должна находиться в модуле functions
     # Запрос символа для игры
     token = input('Введите символ, которым будете играть (X или O): ')
-    if token == gameset.TOKENS[1]:
+    if token == config.TOKENS[1]:
+        # ИСПРАВИТЬ: какая у вас структура переменной config.SAVES?
         config.SAVES.PLAYERS[0]['tokens'] = token
     else:
         config.SAVES.PLAYERS[1]['tokens'] = 'O'
 
-    # load_game
-    if config.saves_found== True:
-        config.SAVES
-
-    # elif ... прочие команды
 
 config.save_ini()
